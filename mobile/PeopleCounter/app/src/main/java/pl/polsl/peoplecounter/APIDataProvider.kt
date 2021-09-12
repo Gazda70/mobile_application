@@ -15,17 +15,18 @@ class APIDataProvider {
     interface APIService {
         /*@GET("/predicitons")
         fun greetUser(@Path("user") user: String): Call<ResponseBody>*/
-        @GET("/predicitons")
+        @GET("/predictions")
+
         fun greetUser(): Call<ResponseBody>
 
         @Headers("Content-type: application/json")
-        @POST("/statistics")
+        @POST("/setup")
         fun getVectors(@Body body: JsonObject): Call<ResponseBody>
 
     }
     companion object {
 
-        val BASE_URL = "https://192.168.0.17:5000/"
+        val BASE_URL = "http://192.168.0.241:5000/"
 
         private val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)

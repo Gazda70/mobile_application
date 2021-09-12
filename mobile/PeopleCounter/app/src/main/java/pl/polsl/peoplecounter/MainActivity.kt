@@ -1,10 +1,15 @@
 package pl.polsl.peoplecounter
 
+import android.graphics.Color.red
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -24,10 +29,56 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         var resultButton = findViewById<TextView>(R.id.resultField)
-        getRequest(resultButton)
+        postRequest(resultButton)
+
+        //Part1
+        val entries = ArrayList<Entry>()
+
+//Part2
+        entries.add(Entry(1f, 10f))
+        entries.add(Entry(2f, 2f))
+        entries.add(Entry(3f, 7f))
+        entries.add(Entry(4f, 20f))
+        entries.add(Entry(5f, 16f))
+
+//Part3
+        val vl = LineDataSet(entries, "My Type")
+
+//Part4
+        vl.setDrawValues(false)
+        vl.setDrawFilled(true)
+        vl.lineWidth = 3f
+        vl.fillColor = R.color.purple_200
+        vl.fillAlpha = R.color.white
+
+        val lineChart = findViewById<com.github.mikephil.charting.charts.LineChart>(R.id.lineChart)
+//Part5
+        lineChart.xAxis.labelRotationAngle = 0f
+
+//Part6
+        lineChart.data = LineData(vl)
+
+//Part7
+        lineChart.axisRight.isEnabled = false
+        lineChart.xAxis.axisMaximum = 10.0f + 0.1f
+
+//Part8
+        lineChart.setTouchEnabled(true)
+        lineChart.setPinchZoom(true)
+
+//Part9
+        lineChart.description.text = "Days"
+        lineChart.setNoDataText("No forex yet!")
+
+//Part10
+        lineChart.animateX(1800, Easing.EaseInExpo)
+
+//Part11
+        /*val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
+        lineChart.marker = markerView*/
     }
 
-    fun postRequest(){
+    fun postRequest(resultButton:TextView){
 //  POST demo
         val jsonObj = JsonObject()
         jsonObj.addProperty("title", "rhythm")
@@ -54,11 +105,11 @@ class MainActivity : AppCompatActivity() {
                     )
 
                     Log.d("Pretty Printed JSON :", prettyJson)
-
+                    resultButton.setText(prettyJson)
                 } else {
 
                     Log.e("RETROFIT_ERROR", response.toString())
-
+                    resultButton.setText(response.code().toString())
                 }
             }
         }
