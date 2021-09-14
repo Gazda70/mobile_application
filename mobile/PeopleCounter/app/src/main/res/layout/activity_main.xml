@@ -8,9 +8,10 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="357dp"
-        android:layout_height="38dp"
-        android:text="Welcome to PeopleCounter!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alike_angular"
+        android:text="Welcome to People Counter!"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -18,49 +19,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.079" />
 
-    <TextView
-        android:id="@+id/resultField"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/viewStatisticsButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="177dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="176dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="248dp"
+        android:text="View detection statistics"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/detectionDurationInputLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="177dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="176dp"
-        android:text="TextView"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="83dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="109dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewStatisticsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resultField" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="93dp"
-        android:background="@drawable/gradient_bg"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lineChart"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/detectionDurationInput"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            android:padding="9dp" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:hint="Detection duration" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/startDetectionButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="76dp"
+        android:text="Launch detection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,12 +16,11 @@ class APIDataProvider {
         /*@GET("/predicitons")
         fun greetUser(@Path("user") user: String): Call<ResponseBody>*/
         @GET("/predictions")
-
-        fun greetUser(): Call<ResponseBody>
+        fun getDetectionStatistics(): Call<ResponseBody>
 
         @Headers("Content-type: application/json")
         @POST("/setup")
-        fun getVectors(@Body body: JsonObject): Call<ResponseBody>
+        fun setupNewDetection(@Body body: JsonObject): Call<ResponseBody>
 
     }
     companion object {

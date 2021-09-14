@@ -1,89 +1,126 @@
 package pl.polsl.peoplecounter
 
-import android.graphics.Color.red
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
-import android.widget.Toast
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.Response
 import okhttp3.ResponseBody
 import pl.polsl.peoplecounter.APIDataProvider.Companion.service
+import android.content.Intent
+import android.widget.Button
+import android.widget.Toast
+import com.google.android.material.textfield.TextInputEditText
+import retrofit2.Call
+import retrofit2.Callback
+import java.lang.Exception
+import java.lang.Integer.parseInt
+import java.util.*
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.hours
+import kotlin.time.minutes
+
 
 class MainActivity : AppCompatActivity() {
+
+    private var numberOfSecondsForDetection = 0
+
+
+    @ExperimentalTime
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var resultButton = findViewById<TextView>(R.id.resultField)
-        postRequest(resultButton)
+        val viewStatisticsButton = findViewById<Button>(R.id.viewStatisticsButton)
+        //postRequest(resultButton)
 
-        //Part1
-        val entries = ArrayList<Entry>()
+        viewStatisticsButton.setOnClickListener {
+            try {
+                val k = Intent(this@MainActivity, StatisticsPresentationActivity::class.java)
+                startActivity(k)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
-//Part2
-        entries.add(Entry(1f, 10f))
-        entries.add(Entry(2f, 2f))
-        entries.add(Entry(3f, 7f))
-        entries.add(Entry(4f, 20f))
-        entries.add(Entry(5f, 16f))
+        val startDetectionButton = findViewById<Button>(R.id.startDetectionButton)
 
-//Part3
-        val vl = LineDataSet(entries, "My Type")
+        val detectionTimeString = findViewById<TextInputEditText>(R.id.detectionDurationInput)
 
-//Part4
-        vl.setDrawValues(false)
-        vl.setDrawFilled(true)
-        vl.lineWidth = 3f
-        vl.fillColor = R.color.purple_200
-        vl.fillAlpha = R.color.white
+        startDetectionButton.setOnClickListener {
+            if(processTimeString(detectionTimeString.text.toString())){
+                startDetectionRequest()
+            }
+        }
 
-        val lineChart = findViewById<com.github.mikephil.charting.charts.LineChart>(R.id.lineChart)
-//Part5
-        lineChart.xAxis.labelRotationAngle = 0f
-
-//Part6
-        lineChart.data = LineData(vl)
-
-//Part7
-        lineChart.axisRight.isEnabled = false
-        lineChart.xAxis.axisMaximum = 10.0f + 0.1f
-
-//Part8
-        lineChart.setTouchEnabled(true)
-        lineChart.setPinchZoom(true)
-
-//Part9
-        lineChart.description.text = "Days"
-        lineChart.setNoDataText("No forex yet!")
-
-//Part10
-        lineChart.animateX(1800, Easing.EaseInExpo)
-
-//Part11
-        /*val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
-        lineChart.marker = markerView*/
     }
 
-    fun postRequest(resultButton:TextView){
+    @ExperimentalTime
+    fun processTimeString(givenTime:String): Boolean{
+        /*val re = Regex("/^(?:([01]?|2[0-3]):([0-5]?))?\$/")
+        if(re.matches(givenTime)){*/
+            val hhMM = givenTime.split(':')
+
+        val rightNow = Calendar.getInstance()
+        val currentHourIn24Format =
+            rightNow[Calendar.HOUR_OF_DAY] // return the hour in 24 hrs format (ranging from 0-23)
+        val currentMinute =
+            rightNow[Calendar.MINUTE] // return the hour in 24 hrs format (ranging from 0-23)
+
+        Log.i("parseInt(hhMM[0], 10)", parseInt(hhMM[0], 10).toString())
+            Log.i("currentdate.time.hours.inWholeHours", currentHourIn24Format.toString())
+            val resultHours = parseInt(hhMM[0], 10) - currentHourIn24Format
+            var resultMinutes = parseInt(hhMM[1], 10) - currentMinute
+            if (resultHours < 0){
+                val toast = Toast.makeText(applicationContext,
+                    "You can't setup detection for time in past. Increase hour !", Toast.LENGTH_SHORT)
+                toast.show()
+                return false
+            }
+            if(resultMinutes < 0){
+                if(resultHours == 0){
+                    val toast = Toast.makeText(applicationContext,
+                        "You can't setup detection for time in past. Increase minutes !", Toast.LENGTH_SHORT)
+                    toast.show()
+                    return false
+                }
+                resultMinutes = 60 - resultMinutes;
+            }
+            this.calculateSecondsForDetection(resultHours.toInt(), resultMinutes.toInt());
+            return true
+        /*}else{
+            val toast = Toast.makeText(applicationContext,
+                "You need to put detection end time in the format of HH:MM !", Toast.LENGTH_SHORT)
+            toast.show()
+            return false
+        }*/
+        /*val hhMM = givenTime.split(':')
+        if(hhMM.size == 2){
+            val regCheck = Regex("/^(?:([01]?\\d|2[0-3]):([0-5]?\\d))?\$/")
+            if(regCheck.matches(hhMM[0]) && regCheck.matches(hhMM[1])){
+                numberOfSeconds = hhMM[0].toInt() * 3600 +
+            }
+        }*/
+    }
+
+    fun calculateSecondsForDetection(hours: Int, minutes:Int){
+        this.numberOfSecondsForDetection = hours * 3600 + minutes * 60;
+    }
+
+    fun startDetectionRequest(){
 //  POST demo
         val jsonObj = JsonObject()
-        jsonObj.addProperty("title", "rhythm")
-        jsonObj.addProperty("singer", "meee")
-        jsonObj.addProperty("text", "Jack and jill went up the hill to fetch a pail of water!")
+        jsonObj.addProperty("networkType", "CUSTOM")
+        jsonObj.addProperty("numberOfSecondsForDetection", this.numberOfSecondsForDetection)
+        jsonObj.addProperty("objThreshold", "0.3")
+        jsonObj.addProperty("iouThreshold", "0.1")
 
         // Convert JSONObject to String
        /* val jsonObjectString = jsonObj.toString()
@@ -91,90 +128,28 @@ class MainActivity : AppCompatActivity() {
         // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())*/
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = APIDataProvider.service.getVectors(jsonObj).execute()
-
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-
-                    // Convert raw JSON to pretty JSON using GSON library
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val prettyJson = gson.toJson(
-                            response.body()
-                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
-                    )
-
-                    Log.d("Pretty Printed JSON :", prettyJson)
-                    resultButton.setText(prettyJson)
-                } else {
-
-                    Log.e("RETROFIT_ERROR", response.toString())
-                    resultButton.setText(response.code().toString())
-                }
-            }
-        }
-            /*.enqueue(object : Callback<ResponseBody!>! {
+            val response = APIDataProvider.service.setupNewDetection(jsonObj).enqueue(object :
+                Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    println("---TTTT :: POST Throwable EXCEPTION:: " + t.message)
+                    Log.i("Error", "My error")
                 }
-
                 override fun onResponse(
                     call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
+                    response: retrofit2.Response<ResponseBody>
                 ) {
                     if (response.isSuccessful) {
-                        val msg = response.body()?.string()
-                        println("---TTTT :: POST msg from server :: " + msg)
-                        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            })*/
-    }
-
-    fun getRequest(resultButton:TextView){
-        CoroutineScope(Dispatchers.IO).launch {
-            /*
-             * For @Query: You need to replace the following line with val response = service.getEmployees(2)
-             * For @Path: You need to replace the following line with val response = service.getEmployee(53)
-             */
-
-            // Do the GET request and get response
-            val response = service.greetUser().execute()
-
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-
-                    // Convert raw JSON to pretty JSON using GSON library
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val prettyJson = gson.toJson(
+                        val gson = GsonBuilder().setPrettyPrinting().create()
+                        val prettyJson = gson.toJson(
                             response.body()
                                 ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
-                    )
-                    resultButton.setText(prettyJson)
-                    Log.d("Pretty Printed JSON :", prettyJson)
-
-                } else {
-                    resultButton.setText(response.code().toString())
-                    Log.e("RETROFIT_ERROR", response.code().toString())
-
-                }
-            }
-        }
-        /*APIDataProvider
-            .service
-            .greetUser("Audhil")
-            .enqueue(object : Callback{
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    println("---TTTT :: GET Throwable EXCEPTION:: " + t.message)
-                }
-
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    if (response.isSuccessful) {
-                        val msg = response.body()?.string()
-                        println("---TTTT :: GET msg from server :: " + msg)
-                        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+                        )
                     }
                 }
-            })*/
+
+            })
+            /*CoroutineScope(Dispatchers.IO).launch {
+                withContext(Dispatchers.Main) {
+                }
+            }*/
     }
 }
