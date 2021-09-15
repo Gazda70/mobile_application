@@ -1,8 +1,10 @@
 package pl.polsl.peoplecounter
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.Entry
@@ -14,6 +16,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,6 +29,18 @@ class StatisticsPresentationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics_presentation)
         getDetectionStatistics()
+
+        val backButton = findViewById<Button>(R.id.backButton)
+        //postRequest(resultButton)
+
+        backButton.setOnClickListener {
+            try {
+                val k = Intent(this@StatisticsPresentationActivity, MainActivity::class.java)
+                startActivity(k)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     fun initializeDetectionsDurationChart(detectionData: JSONArray){

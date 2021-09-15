@@ -57,6 +57,9 @@ class MainActivity : AppCompatActivity() {
         startDetectionButton.setOnClickListener {
             if(processTimeString(detectionTimeString.text.toString())){
                 startDetectionRequest()
+                val toast = Toast.makeText(applicationContext,
+                    "Detection has started!", Toast.LENGTH_SHORT)
+                toast.show()
             }
         }
 
