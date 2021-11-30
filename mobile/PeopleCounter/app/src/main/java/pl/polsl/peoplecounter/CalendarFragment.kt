@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.findNavController
 
 class CalendarFragment : Fragment() {
 
@@ -19,7 +21,12 @@ class CalendarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.calendar_fragment, container, false)
+        val infl = inflater.inflate(R.layout.calendar_fragment, container, false)
+        val goToTimeButton = infl.findViewById<Button>(R.id.got_to_clock_button)
+        goToTimeButton.setOnClickListener {
+            infl.findNavController().navigate(R.id.action_calendarFragment_to_clockFragment)
+        }
+        return infl
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

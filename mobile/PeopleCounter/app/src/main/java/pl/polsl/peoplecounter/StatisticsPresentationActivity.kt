@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -144,7 +145,9 @@ class StatisticsPresentationActivity : AppCompatActivity() {
         val response = APIDataProvider.service.getDetectionStatistics().enqueue(object :
             Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                val toast = Toast.makeText(applicationContext,
+                    "Could not retrieve detection data!", Toast.LENGTH_SHORT)
+                toast.show()
             }
             override fun onResponse(
                 call: Call<ResponseBody>,

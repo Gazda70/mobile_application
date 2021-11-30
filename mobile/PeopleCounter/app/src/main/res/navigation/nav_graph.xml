@@ -2,4 +2,37 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph" />
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/setUpDetection">
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="pl.polsl.peoplecounter.CalendarFragment"
+        android:label="calendar_fragment"
+        tools:layout="@layout/calendar_fragment" >
+        <action
+            android:id="@+id/action_calendarFragment_to_clockFragment"
+            app:destination="@id/clockFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/clockFragment"
+        android:name="pl.polsl.peoplecounter.ClockFragment"
+        android:label="clock_fragment"
+        tools:layout="@layout/clock_fragment" />
+    <activity
+        android:id="@+id/statisticsPresentationActivity"
+        android:name="pl.polsl.peoplecounter.StatisticsPresentationActivity"
+        android:label="activity_statistics_presentation"
+        tools:layout="@layout/activity_statistics_presentation" />
+    <fragment
+        android:id="@+id/setUpDetection"
+        android:name="pl.polsl.peoplecounter.SetUpDetection"
+        android:label="set_up_detection_fragment"
+        tools:layout="@layout/set_up_detection_fragment" >
+        <action
+            android:id="@+id/action_setUpDetection_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_setUpDetection_to_statisticsPresentationActivity"
+            app:destination="@id/statisticsPresentationActivity" />
+    </fragment>
+</navigation>

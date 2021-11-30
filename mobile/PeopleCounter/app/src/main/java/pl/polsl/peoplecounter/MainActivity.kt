@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewStatisticsButton = findViewById<Button>(R.id.viewStatisticsButton)
+        /*val viewStatisticsButton = findViewById<Button>(R.id.viewStatisticsButton)
         //postRequest(resultButton)
 
         viewStatisticsButton.setOnClickListener {
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                     "Detection has started!", Toast.LENGTH_SHORT)
                 toast.show()
             }
-        }
+        }*/
 
     }
 
