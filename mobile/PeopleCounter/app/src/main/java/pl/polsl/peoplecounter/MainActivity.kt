@@ -65,58 +65,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @ExperimentalTime
-    fun processTimeString(givenTime:String): Boolean{
-        /*val re = Regex("/^(?:([01]?|2[0-3]):([0-5]?))?\$/")
-        if(re.matches(givenTime)){*/
-            val hhMM = givenTime.split(':')
-
-        val rightNow = Calendar.getInstance()
-        val currentHourIn24Format =
-            rightNow[Calendar.HOUR_OF_DAY] // return the hour in 24 hrs format (ranging from 0-23)
-        val currentMinute =
-            rightNow[Calendar.MINUTE] // return the hour in 24 hrs format (ranging from 0-23)
-
-        Log.i("parseInt(hhMM[0], 10)", parseInt(hhMM[0], 10).toString())
-            Log.i("currentdate.time.hours.inWholeHours", currentHourIn24Format.toString())
-            val resultHours = parseInt(hhMM[0], 10) - currentHourIn24Format
-            var resultMinutes = parseInt(hhMM[1], 10) - currentMinute
-            if (resultHours < 0){
-                val toast = Toast.makeText(applicationContext,
-                    "You can't setup detection for time in past. Increase hour !", Toast.LENGTH_SHORT)
-                toast.show()
-                return false
-            }
-            if(resultMinutes < 0){
-                if(resultHours == 0){
-                    val toast = Toast.makeText(applicationContext,
-                        "You can't setup detection for time in past. Increase minutes !", Toast.LENGTH_SHORT)
-                    toast.show()
-                    return false
-                }
-                resultMinutes = 60 - resultMinutes;
-            }
-            this.calculateSecondsForDetection(resultHours.toInt(), resultMinutes.toInt());
-            return true
-        /*}else{
-            val toast = Toast.makeText(applicationContext,
-                "You need to put detection end time in the format of HH:MM !", Toast.LENGTH_SHORT)
-            toast.show()
-            return false
-        }*/
-        /*val hhMM = givenTime.split(':')
-        if(hhMM.size == 2){
-            val regCheck = Regex("/^(?:([01]?\\d|2[0-3]):([0-5]?\\d))?\$/")
-            if(regCheck.matches(hhMM[0]) && regCheck.matches(hhMM[1])){
-                numberOfSeconds = hhMM[0].toInt() * 3600 +
-            }
-        }*/
-    }
-
-    fun calculateSecondsForDetection(hours: Int, minutes:Int){
-        this.numberOfSecondsForDetection = hours * 3600 + minutes * 60;
-    }
-
     fun startDetectionRequest(){
 //  POST demo
         val jsonObj = JsonObject()

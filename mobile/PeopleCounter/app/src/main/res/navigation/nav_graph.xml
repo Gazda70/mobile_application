@@ -6,18 +6,22 @@
     app:startDestination="@id/setUpDetection">
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="pl.polsl.peoplecounter.CalendarFragment"
+        android:name="pl.polsl.peoplecounter.DateFragment"
         android:label="calendar_fragment"
-        tools:layout="@layout/calendar_fragment" >
+        tools:layout="@layout/date_fragment" >
         <action
             android:id="@+id/action_calendarFragment_to_clockFragment"
             app:destination="@id/clockFragment" />
     </fragment>
     <fragment
         android:id="@+id/clockFragment"
-        android:name="pl.polsl.peoplecounter.ClockFragment"
+        android:name="pl.polsl.peoplecounter.StartTimeFragment"
         android:label="clock_fragment"
-        tools:layout="@layout/clock_fragment" />
+        tools:layout="@layout/start_time_fragment" >
+        <action
+            android:id="@+id/action_clockFragment_to_endTimeFragment"
+            app:destination="@id/endTimeFragment" />
+    </fragment>
     <activity
         android:id="@+id/statisticsPresentationActivity"
         android:name="pl.polsl.peoplecounter.StatisticsPresentationActivity"
@@ -35,4 +39,8 @@
             android:id="@+id/action_setUpDetection_to_statisticsPresentationActivity"
             app:destination="@id/statisticsPresentationActivity" />
     </fragment>
+    <fragment
+        android:id="@+id/endTimeFragment"
+        android:name="pl.polsl.peoplecounter.EndTimeFragment"
+        android:label="EndTimeFragment" />
 </navigation>

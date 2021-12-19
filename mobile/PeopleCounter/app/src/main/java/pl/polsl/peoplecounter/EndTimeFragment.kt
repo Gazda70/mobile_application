@@ -7,24 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class ClockFragment : Fragment() {
+class EndTimeFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ClockFragment()
+        fun newInstance() = EndTimeFragment()
     }
 
-    private lateinit var viewModel: ClockViewModel
+    private lateinit var viewModel: EndTimeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.clock_fragment, container, false)
+        return inflater.inflate(R.layout.end_time_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ClockViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(EndTimeViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
