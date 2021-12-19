@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
 
 class DateFragment : Fragment() {
 
@@ -19,6 +22,8 @@ class DateFragment : Fragment() {
 
     private val viewModel: DateViewModel by activityViewModels()
 
+   // private val viewModel: DateViewModel by navGraphViewModels(R.id.startTimeFragment)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,15 +32,21 @@ class DateFragment : Fragment() {
         val infl = inflater.inflate(R.layout.date_fragment, container, false)
         val goToTimeButton = infl.findViewById<Button>(R.id.got_to_clock_button)
         goToTimeButton.setOnClickListener {
-            infl.findNavController().navigate(R.id.action_calendarFragment_to_clockFragment)
+            infl.findNavController().navigate(R.id.action_calendarFragment_to_startTimeFragment)
         }
 
         val calendarView = infl.findViewById<CalendarView>(R.id.set_detection_date_calendar)
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            viewModel.detectionDate.value = DetectionDate(year.toString(),
+            /*viewModel.detectionDate.value = DetectionDate(year.toString(),
                 formatMonthNumberToLiteralShortcut(month),
                 dayOfMonth.toString())
-            Log.i("DATE", "MY DATE IS:" + viewModel.detectionDate.toString())
+            viewModel.detectionDate.postValue(DetectionDate(year.toString(),
+                formatMonthNumberToLiteralShortcut(month),
+                dayOfMonth.toString()))*/
+            setFragmentResult("requestKey", bundleOf("data" to DetectionDate(year.toString(),
+                formatMonthNumberToLiteralShortcut(month),
+                dayOfMonth.toString()).toString()))
+            //Log.i("DATE", "MY DATE IS:" + viewModel.detectionDate.toString())
         }
         return infl
     }

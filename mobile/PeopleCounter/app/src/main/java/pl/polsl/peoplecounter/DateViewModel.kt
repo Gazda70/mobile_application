@@ -6,5 +6,6 @@ import java.util.*
 
 class DateViewModel : ViewModel() {
     // TODO: Implement the ViewModel
-    val detectionDate = MutableLiveData<DetectionDate>()
+    //val detectionDate = MutableLiveData<DetectionDate>()
+    //lateinit var detectionDate: DetectionDate
 }

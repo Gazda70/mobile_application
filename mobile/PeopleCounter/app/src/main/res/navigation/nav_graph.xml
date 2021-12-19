@@ -10,17 +10,8 @@
         android:label="calendar_fragment"
         tools:layout="@layout/date_fragment" >
         <action
-            android:id="@+id/action_calendarFragment_to_clockFragment"
-            app:destination="@id/clockFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/clockFragment"
-        android:name="pl.polsl.peoplecounter.StartTimeFragment"
-        android:label="clock_fragment"
-        tools:layout="@layout/start_time_fragment" >
-        <action
-            android:id="@+id/action_clockFragment_to_endTimeFragment"
-            app:destination="@id/endTimeFragment" />
+            android:id="@+id/action_calendarFragment_to_startTimeFragment"
+            app:destination="@id/startTimeFragment" />
     </fragment>
     <activity
         android:id="@+id/statisticsPresentationActivity"
@@ -43,4 +34,12 @@
         android:id="@+id/endTimeFragment"
         android:name="pl.polsl.peoplecounter.EndTimeFragment"
         android:label="EndTimeFragment" />
+    <fragment
+        android:id="@+id/startTimeFragment"
+        android:name="pl.polsl.peoplecounter.StartTimeFragment"
+        android:label="StartTimeFragment" >
+        <action
+            android:id="@+id/action_startTimeFragment_to_endTimeFragment"
+            app:destination="@id/endTimeFragment" />
+    </fragment>
 </navigation>

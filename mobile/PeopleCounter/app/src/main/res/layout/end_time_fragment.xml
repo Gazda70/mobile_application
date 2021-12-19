@@ -6,12 +6,12 @@
     android:layout_height="match_parent">
 
     <TimePicker
-        android:id="@+id/detection_end_time"
+        android:id="@+id/detection_end_time_time_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="66dp"
         android:timePickerMode="clock"
-        app:layout_constraintBottom_toTopOf="@+id/setup_detection_end_time_button"
+        app:layout_constraintBottom_toTopOf="@+id/send_detection_request_button"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -22,11 +22,11 @@
         android:layout_marginBottom="51dp"
         android:text="Setup detection end time"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/detection_end_time"
+        app:layout_constraintBottom_toTopOf="@+id/detection_end_time_time_picker"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/setup_detection_end_time_button"
+        android:id="@+id/send_detection_request_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="91dp"
