@@ -20,10 +20,6 @@ class DateFragment : Fragment() {
         fun newInstance() = DateFragment()
     }
 
-    private val viewModel: DateViewModel by activityViewModels()
-
-   // private val viewModel: DateViewModel by navGraphViewModels(R.id.startTimeFragment)
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,15 +33,9 @@ class DateFragment : Fragment() {
 
         val calendarView = infl.findViewById<CalendarView>(R.id.set_detection_date_calendar)
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            /*viewModel.detectionDate.value = DetectionDate(year.toString(),
-                formatMonthNumberToLiteralShortcut(month),
-                dayOfMonth.toString())
-            viewModel.detectionDate.postValue(DetectionDate(year.toString(),
-                formatMonthNumberToLiteralShortcut(month),
-                dayOfMonth.toString()))*/
-            setFragmentResult("requestKey", bundleOf("data" to DetectionDate(year.toString(),
-                formatMonthNumberToLiteralShortcut(month),
-                dayOfMonth.toString()).toString()))
+            setFragmentResult("detection_date", bundleOf("year" to year.toString(),
+                "month" to formatMonthNumberToLiteralShortcut(month),
+                "day" to dayOfMonth.toString()))
             //Log.i("DATE", "MY DATE IS:" + viewModel.detectionDate.toString())
         }
         return infl
@@ -53,7 +43,6 @@ class DateFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //viewModel = ViewModelProvider(this).get(CalendarViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

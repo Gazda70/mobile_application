@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TimePicker
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.fragment.app.setFragmentResult
@@ -21,17 +22,6 @@ class StartTimeFragment : Fragment() {
         fun newInstance() = StartTimeFragment()
     }
 
-    private val viewModel: StartTimeViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setFragmentResultListener("requestKey") { key, bundle ->
-            // Any type can be passed via to the bundle
-            val result = bundle.getString("data")
-            // Do something with the result...
-            Log.i("DATE FROM LISTENER", "DETECTION DATE " + result)
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,14 +33,13 @@ class StartTimeFragment : Fragment() {
         }
         val timePicker = infl.findViewById<TimePicker>(R.id.detection_start_time_time_picker)
         timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-            viewModel.detectionStartTime.value = DetectionTime(hourOfDay.toString(), minute.toString())
+            setFragmentResult("detection_start_time", bundleOf("hour" to hourOfDay.toString(), "minute" to minute.toString()))
         }
         return infl
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //viewModel = ViewModelProvider(this).get(StartTimeViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

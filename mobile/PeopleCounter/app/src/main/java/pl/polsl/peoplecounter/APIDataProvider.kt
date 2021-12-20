@@ -13,25 +13,19 @@ import retrofit2.http.*
 class APIDataProvider {
 
     interface APIService {
-        /*@GET("/predicitons")
-        fun greetUser(@Path("user") user: String): Call<ResponseBody>*/
         @GET("/predictions")
         fun getDetectionStatistics(): Call<ResponseBody>
 
         @Headers("Content-type: application/json")
         @POST("/setup")
         fun setupNewDetection(@Body body: JsonObject): Call<ResponseBody>
-
     }
     companion object {
-
         val BASE_URL = "http://192.168.0.241:5000/"
-
         private val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .build()
-
         var service = retrofit.create(APIService::class.java)
     }
 }
