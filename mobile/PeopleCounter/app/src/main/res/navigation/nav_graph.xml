@@ -6,40 +6,56 @@
     app:startDestination="@id/setUpDetection">
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="pl.polsl.peoplecounter.DateFragment"
+        android:name="pl.polsl.peoplecounter.date_setup.DateFragment"
         android:label="calendar_fragment"
-        tools:layout="@layout/date_fragment" >
+        tools:layout="@layout/date_fragment">
         <action
             android:id="@+id/action_calendarFragment_to_startTimeFragment"
             app:destination="@id/startTimeFragment" />
     </fragment>
     <activity
         android:id="@+id/statisticsPresentationActivity"
-        android:name="pl.polsl.peoplecounter.StatisticsPresentationActivity"
+        android:name="pl.polsl.peoplecounter.statistics_presentation.StatisticsPresentationActivity"
         android:label="activity_statistics_presentation"
         tools:layout="@layout/activity_statistics_presentation" />
     <fragment
         android:id="@+id/setUpDetection"
         android:name="pl.polsl.peoplecounter.SetUpDetection"
         android:label="set_up_detection_fragment"
-        tools:layout="@layout/set_up_detection_fragment" >
+        tools:layout="@layout/set_up_detection_fragment">
         <action
             android:id="@+id/action_setUpDetection_to_calendarFragment"
             app:destination="@id/calendarFragment" />
         <action
-            android:id="@+id/action_setUpDetection_to_statisticsPresentationActivity"
-            app:destination="@id/statisticsPresentationActivity" />
+            android:id="@+id/action_setUpDetection_to_dateForStatistics"
+            app:destination="@id/dateForStatistics" />
     </fragment>
     <fragment
         android:id="@+id/endTimeFragment"
-        android:name="pl.polsl.peoplecounter.EndTimeFragment"
-        android:label="EndTimeFragment" />
+        android:name="pl.polsl.peoplecounter.time_setup.EndTimeFragment"
+        android:label="EndTimeFragment" >
+        <action
+            android:id="@+id/action_endTimeFragment_to_setUpDetection"
+            app:destination="@id/setUpDetection" />
+    </fragment>
     <fragment
         android:id="@+id/startTimeFragment"
-        android:name="pl.polsl.peoplecounter.StartTimeFragment"
-        android:label="StartTimeFragment" >
+        android:name="pl.polsl.peoplecounter.time_setup.StartTimeFragment"
+        android:label="StartTimeFragment">
         <action
             android:id="@+id/action_startTimeFragment_to_endTimeFragment"
             app:destination="@id/endTimeFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/barChartSimpleActivity"
+        android:name="pl.polsl.peoplecounter.statistics_presentation.BarChartSimpleActivity"
+        android:label="BarChartSimpleActivity" />
+    <fragment
+        android:id="@+id/dateForStatistics"
+        android:name="pl.polsl.peoplecounter.statistics_presentation.DateForStatistics"
+        android:label="DateForStatistics" >
+        <action
+            android:id="@+id/action_dateForStatistics_to_statisticsPresentationActivity"
+            app:destination="@id/statisticsPresentationActivity" />
     </fragment>
 </navigation>

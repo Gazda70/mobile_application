@@ -1,6 +1,5 @@
 package pl.polsl.peoplecounter
 
-import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -9,18 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.findNavController
-import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
+import pl.polsl.peoplecounter.web_services.APIDataProvider
 import retrofit2.Call
 import retrofit2.Callback
-import java.lang.Exception
-import java.util.*
 import kotlin.time.ExperimentalTime
 
 class SetUpDetection : Fragment() {
@@ -43,7 +37,8 @@ class SetUpDetection : Fragment() {
         //postRequest(resultButton)
 
         viewStatisticsButton.setOnClickListener {
-            infl.findNavController().navigate(R.id.action_setUpDetection_to_statisticsPresentationActivity)
+            //infl.findNavController().navigate(R.id.action_setUpDetection_to_statisticsPresentationActivity)
+            infl.findNavController().navigate(R.id.action_setUpDetection_to_dateForStatistics)
             /*try {
                 val k = Intent(context, StatisticsPresentationActivity::class.java)
                 startActivity(k)
@@ -55,6 +50,7 @@ class SetUpDetection : Fragment() {
         val startDetectionButton = infl.findViewById<Button>(R.id.startDetectionButton)
 
         startDetectionButton.setOnClickListener {
+            //infl.findNavController().navigate(R.id.action_setUpDetection_to_calendarFragment)
             infl.findNavController().navigate(R.id.action_setUpDetection_to_calendarFragment)
             /*if(processTimeString(detectionTimeString.text.toString())){
                 startDetectionRequest()

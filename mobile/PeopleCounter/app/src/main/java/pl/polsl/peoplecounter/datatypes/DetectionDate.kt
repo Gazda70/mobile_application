@@ -1,4 +1,4 @@
-package pl.polsl.peoplecounter
+package pl.polsl.peoplecounter.datatypes
 
 data class DetectionDate( val year:String,
                            val month:String,

@@ -3,29 +3,13 @@ package pl.polsl.peoplecounter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Response
 import okhttp3.ResponseBody
-import pl.polsl.peoplecounter.APIDataProvider.Companion.service
-import android.content.Intent
-import android.widget.Button
-import android.widget.Toast
-import com.google.android.material.textfield.TextInputEditText
+import pl.polsl.peoplecounter.web_services.APIDataProvider
 import retrofit2.Call
 import retrofit2.Callback
-import java.lang.Exception
-import java.lang.Integer.parseInt
-import java.util.*
-import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.hours
-import kotlin.time.minutes
 
 
 class MainActivity : AppCompatActivity() {

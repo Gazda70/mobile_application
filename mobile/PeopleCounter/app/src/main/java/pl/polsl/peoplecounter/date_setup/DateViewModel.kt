@@ -1,4 +1,4 @@
-package pl.polsl.peoplecounter
+package pl.polsl.peoplecounter.date_setup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

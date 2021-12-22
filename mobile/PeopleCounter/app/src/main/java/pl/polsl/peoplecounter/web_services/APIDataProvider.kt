@@ -1,13 +1,11 @@
-package pl.polsl.peoplecounter
+package pl.polsl.peoplecounter.web_services
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
-import pl.polsl.peoplecounter.APIDataProvider.APIService
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import retrofit2.http.*
 
 class APIDataProvider {

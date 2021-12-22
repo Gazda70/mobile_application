@@ -1,23 +1,24 @@
-package pl.polsl.peoplecounter
+package pl.polsl.peoplecounter.statistics_presentation
 
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
+import android.widget.TimePicker
 import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.findNavController
-import androidx.navigation.navGraphViewModels
+import pl.polsl.peoplecounter.R
+import pl.polsl.peoplecounter.time_setup.StartTimeFragment
 
-class DateFragment : Fragment() {
+class DateForStatistics : Fragment() {
 
     companion object {
-        fun newInstance() = DateFragment()
+        fun newInstance() = StartTimeFragment()
     }
 
     override fun onCreateView(
@@ -25,25 +26,21 @@ class DateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val infl = inflater.inflate(R.layout.date_fragment, container, false)
-        val goToTimeButton = infl.findViewById<Button>(R.id.got_to_clock_button)
-        goToTimeButton.setOnClickListener {
-            infl.findNavController().navigate(R.id.action_calendarFragment_to_startTimeFragment)
+        val infl = inflater.inflate(R.layout.date_for_statistics_fragment, container, false)
+        val goToStatisticsPresentationActivityButton = infl.findViewById<Button>(R.id.got_to_statistics_button)
+        goToStatisticsPresentationActivityButton.setOnClickListener {
+            infl.findNavController().navigate(R.id.action_dateForStatistics_to_statisticsPresentationActivity)
         }
 
-        val calendarView = infl.findViewById<CalendarView>(R.id.set_detection_date_calendar)
+        val calendarView = infl.findViewById<CalendarView>(R.id.set_day_for_statistics_display_calendar)
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            setFragmentResult("detection_date", bundleOf("year" to year.toString(),
+            setFragmentResult("date_for_statistics_display", bundleOf("year" to year.toString(),
                 "month" to formatMonthNumberToLiteralShortcut(month),
                 "day" to dayOfMonth.toString()))
             //Log.i("DATE", "MY DATE IS:" + viewModel.detectionDate.toString())
         }
-        return infl
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
+        return infl
     }
 
     fun formatMonthNumberToLiteralShortcut(numberMonth:Int):String{
@@ -62,6 +59,11 @@ class DateFragment : Fragment() {
             12 -> "Dec"
             else -> "Err"
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        // TODO: Use the ViewModel
     }
 
 }

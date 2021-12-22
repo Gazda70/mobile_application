@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <CalendarView
-            android:id="@+id/set_detection_date_calendar"
+            android:id="@+id/set_day_for_statistics_display_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -20,12 +20,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/got_to_clock_button"
+            android:id="@+id/got_to_statistics_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="92dp"
-            android:layout_marginBottom="96dp"
-            android:text="Set detection start time"
+            android:layout_marginStart="128dp"
+            android:layout_marginBottom="92dp"
+            android:text="See statistics"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -33,10 +33,10 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="170dp"
-            android:layout_marginBottom="108dp"
-            android:text="Set detection date"
-            app:layout_constraintBottom_toTopOf="@+id/set_detection_date_calendar"
+            android:layout_marginStart="104dp"
+            android:layout_marginBottom="112dp"
+            android:text="Set date for statistics to display"
+            app:layout_constraintBottom_toTopOf="@+id/set_day_for_statistics_display_calendar"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

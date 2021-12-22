@@ -1,6 +1,5 @@
-package pl.polsl.peoplecounter
+package pl.polsl.peoplecounter.time_setup
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,25 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TimePicker
-import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResult
+import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
+import pl.polsl.peoplecounter.web_services.APIDataProvider
+import pl.polsl.peoplecounter.R
+import pl.polsl.peoplecounter.datatypes.DetectionDate
+import pl.polsl.peoplecounter.datatypes.DetectionTime
 import retrofit2.Call
 import retrofit2.Callback
+import java.time.Duration
 
 class EndTimeFragment : Fragment() {
 
-    private lateinit var detectionDate:DetectionDate
+    private lateinit var detectionDate: DetectionDate
 
-    private lateinit var  detectionStartTime:DetectionTime
+    private lateinit var  detectionStartTime: DetectionTime
 
-    private lateinit var  detectionEndTime:DetectionTime
+    private lateinit var  detectionEndTime: DetectionTime
 
     companion object {
         fun newInstance() = EndTimeFragment()
@@ -60,6 +61,8 @@ class EndTimeFragment : Fragment() {
             //Log.i("DATE", "DETECTION DATE " + dateViewModel.detectionDate)
             //Log.i("START TIME", "DETECTION START TIME " + startTimeViewModel.detectionStartTime.value)
             //Log.i("END TIME", "DETECTION END TIME " + endTimeViewModel.detectionEndTime.value)
+            infl.findNavController().navigate(R.id.action_endTimeFragment_to_setUpDetection)
+            Toast.makeText(context, "Detection request sent", Toast.LENGTH_LONG).show()
         }
 
         val timePicker = infl.findViewById<TimePicker>(R.id.detection_end_time_time_picker)
