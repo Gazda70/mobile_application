@@ -44,7 +44,8 @@ class DayAxisValueFormatter(private val chart: BarLineChartBase<*>) : ValueForma
         if (month == 1) {
             var is29Feb = false
             if (year < 1582) is29Feb =
-                (if (year < 1) year + 1 else year) % 4 == 0 else if (year > 1582) is29Feb =
+                (if (year < 1) year + 1 else year) % 4 == 0
+            else if (year > 1582) is29Feb =
                 year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
             return if (is29Feb) 29 else 28
         }
