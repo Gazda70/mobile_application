@@ -1,119 +1,43 @@
 package pl.polsl.peoplecounter.statistics_presentation
 
 
-import android.graphics.Color
+import android.graphics.Color.RED
+import android.graphics.Color.YELLOW
 import android.os.Bundle
-import android.util.Log
-import android.view.WindowManager
-import android.widget.SeekBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import okhttp3.internal.Util
 import pl.polsl.peoplecounter.R
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 
 class StatisticsPresentationActivity : AppCompatActivity(){
-    private var chart: BarChart? = null
-    private var seekBarX: SeekBar? = null
-    private var seekBarY: SeekBar? = null
-    private var tvX: TextView? = null
-    private var tvY: TextView? = null
-    private val colors_1: Array<String>? = arrayOf("green", "red", "blue")
+    private val MAX_X_VALUE = 7
+    private val MAX_Y_VALUE = 50
+    private val MIN_Y_VALUE = 5
+    private val SET_LABEL = "App Downloads"
+    private val DAYS = arrayOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
+    private lateinit var chart: BarChart
+    val groupSpace = 0.06f
+    val barSpace = 0.02f // x2 dataset
+
+    val barWidth = 0.45f // x2 dataset
+
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_barchart)
-        getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        var dataSets: ArrayList<BarDataSet?> = ArrayList()
-        val xAxisValues: List<String> = ArrayList(
-            Arrays.asList(
-                "Jan",
-                "Feb",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "Decemeber"
-            )
-        )
-        val incomeEntries: MutableList<BarEntry> = getIncomeEntries()
-        dataSets = ArrayList()
-        val set1: BarDataSet
-        set1 = BarDataSet(incomeEntries, "Income")
-        set1.color = Color.rgb(65, 168, 121)
-        set1.valueTextColor = Color.rgb(55, 70, 73)
-        set1.valueTextSize = 10f
-        dataSets.add(set1)
-
-//customization
-
-//customization
-        val mLineGraph: BarChart = findViewById<BarChart>(R.id.bar_chart)
-        mLineGraph.setTouchEnabled(true)
-        mLineGraph.isDragEnabled = true
-        mLineGraph.setScaleEnabled(false)
-        mLineGraph.setPinchZoom(false)
-        mLineGraph.setDrawGridBackground(false)
-        mLineGraph.extraLeftOffset = 15f
-        mLineGraph.extraRightOffset = 15f
-//to hide background lines
-//to hide background lines
-        mLineGraph.xAxis.setDrawGridLines(false)
-        mLineGraph.axisLeft.setDrawGridLines(false)
-        mLineGraph.axisRight.setDrawGridLines(false)
-
-//to hide right Y and top X border
-
-//to hide right Y and top X border
-        val rightYAxis = mLineGraph.axisRight
-        rightYAxis.isEnabled = false
-        val leftYAxis = mLineGraph.axisLeft
-        leftYAxis.isEnabled = false
-        val topXAxis = mLineGraph.xAxis
-        topXAxis.isEnabled = false
-
-
-        val xAxis = mLineGraph.xAxis
-        xAxis.granularity = 1f
-        xAxis.setCenterAxisLabels(true)
-        xAxis.isEnabled = true
-        xAxis.setDrawGridLines(false)
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-
-        //set1.lineWidth = 4f
-        //set1.circleRadius = 3f
-        set1.setDrawValues(false)
-        //set1.circleHoleColor = resources.getColor(R.color.purple_200)
-        //set1.setCircleColor(resources.getColor(R.color.teal_700))
-
-//String setter in x-Axis
-
-//String setter in x-Axis
-        mLineGraph.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
-
-        val data = BarData(dataSets as List<IBarDataSet>?)
-        mLineGraph.data = data
-        mLineGraph.animateX(2000)
-        mLineGraph.invalidate()
-        mLineGraph.legend.isEnabled = false
-        mLineGraph.description.isEnabled = false
+        chart = findViewById<BarChart>(R.id.bar_chart)
+        val data: BarData = createChartData()!!
+        configureChartAppearance()
+        prepareChartData(data)
         /*
         setContentView(R.layout.activity_barchart)
         setTitle("BarChartActivityMultiDataset")
@@ -302,20 +226,79 @@ class StatisticsPresentationActivity : AppCompatActivity(){
     }*/
 private fun getIncomeEntries(): MutableList<BarEntry> {
     val incomeEntries: ArrayList<BarEntry> = ArrayList()
-    incomeEntries.add(BarEntry(1F, 11300F))
+    incomeEntries.add(BarEntry(1F, 1000F))
     incomeEntries.add(BarEntry(2F, 1390F))
     incomeEntries.add(BarEntry(3F, 1190F))
     incomeEntries.add(BarEntry(4F, 7200F))
-    incomeEntries.add(BarEntry(5F, 4790F))
+    /*incomeEntries.add(BarEntry(5F, 4790F))
     incomeEntries.add(BarEntry(6F, 4500F))
     incomeEntries.add(BarEntry(7F, 8000F))
     incomeEntries.add(BarEntry(8F, 7034F))
     incomeEntries.add(BarEntry(9F, 4307F))
     incomeEntries.add(BarEntry(10F, 8762F))
     incomeEntries.add(BarEntry(11F, 4355F))
-    incomeEntries.add(BarEntry(12F, 6000F))
-    return incomeEntries.subList(0, 12)
+    incomeEntries.add(BarEntry(12F, 6000F))*/
+    return incomeEntries.subList(0, 4)
 }
+    private fun configureChartAppearance() {
+        chart.getDescription().setEnabled(false)
+        chart.setDrawValueAboveBar(false)
+        val xAxis: XAxis = chart.getXAxis()
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return DAYS[value.toInt()]
+            }
+        }
+        val axisLeft: YAxis = chart.getAxisLeft()
+        axisLeft.granularity = 10f
+        axisLeft.axisMinimum = 0f
+        val axisRight: YAxis = chart.getAxisRight()
+        axisRight.granularity = 10f
+        axisRight.axisMinimum = 0f
+    }
+
+    private fun createChartData(): BarData? {
+        /*val values: ArrayList<BarEntry> = ArrayList()
+        for (i in 0 until MAX_X_VALUE) {
+            val x = i.toFloat()
+            val y: Float = Random.nextFloat() % (MAX_Y_VALUE - MIN_Y_VALUE) + MIN_Y_VALUE
+
+            values.add(BarEntry(x, y))
+        }
+        val set1 = BarDataSet(values, SET_LABEL)
+        val dataSets: ArrayList<IBarDataSet> = ArrayList()
+        dataSets.add(set1)
+        return BarData(dataSets)*/
+        val group1 = arrayOf(1F, 2F, 3F)
+        val group2 = arrayOf(4F, 5F, 6F)
+
+        val entriesGroup1:ArrayList<BarEntry> = ArrayList()
+        val entriesGroup2:ArrayList<BarEntry> = ArrayList()
+// fill the lists
+        for(i in group1.indices) {
+            entriesGroup1.add(i, BarEntry(i.toFloat(), group1.get(i)))
+            entriesGroup2.add(i, BarEntry(i.toFloat(), group2.get(i)))
+        }
+
+        val set1:BarDataSet = BarDataSet(entriesGroup1, "Group 1")
+        val set2:BarDataSet = BarDataSet(entriesGroup2, "Group 2")
+        set1.color = YELLOW
+        set2.color = RED
+        val dataSets: ArrayList<IBarDataSet> = ArrayList()
+        dataSets.add(set1)
+        dataSets.add(set2)
+        val data = BarData(dataSets)
+        data.barWidth = barWidth
+        return data
+    }
+
+    private fun prepareChartData(data: BarData) {
+        data.setValueTextSize(12f)
+        chart.data = data
+        chart.groupBars(0f, groupSpace, barSpace)
+        chart.invalidate()
+    }
+
     /*
     override fun onStartTrackingTouch(seekBar: SeekBar) {}
     override fun onStopTrackingTouch(seekBar: SeekBar) {}

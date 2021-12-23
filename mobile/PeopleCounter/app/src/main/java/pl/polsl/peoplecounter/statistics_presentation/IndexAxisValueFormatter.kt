@@ -20,7 +20,7 @@ class IndexAxisValueFormatter : ValueFormatter {
      *
      * @param values The values string array
      */
-    constructor(values: Array<String>?) {
+    constructor(values: Array<String>) {
         if (values != null) this.values = values
     }
 
