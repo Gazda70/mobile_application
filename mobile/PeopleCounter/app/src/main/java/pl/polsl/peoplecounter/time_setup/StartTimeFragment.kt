@@ -1,6 +1,7 @@
 package pl.polsl.peoplecounter.time_setup
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,12 +25,12 @@ class StartTimeFragment : Fragment() {
     ): View? {
         val infl = inflater.inflate(R.layout.start_time_fragment, container, false)
         val goToEndTimeButton = infl.findViewById<Button>(R.id.setup_detection_end_time_button)
-        goToEndTimeButton.setOnClickListener {
-            infl.findNavController().navigate(R.id.action_startTimeFragment_to_endTimeFragment)
-        }
         val timePicker = infl.findViewById<TimePicker>(R.id.detection_start_time_time_picker)
-        timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-            setFragmentResult("detection_start_time", bundleOf("hour" to hourOfDay.toString(), "minute" to minute.toString()))
+        Log.i("TIME", "MY TIME IS:" + timePicker.hour.toString())
+        goToEndTimeButton.setOnClickListener {
+            setFragmentResult("detection_start_time",
+                bundleOf("hour" to timePicker.hour.toString(), "minute" to timePicker.minute.toString()))
+            infl.findNavController().navigate(R.id.action_startTimeFragment_to_endTimeFragment)
         }
         return infl
     }

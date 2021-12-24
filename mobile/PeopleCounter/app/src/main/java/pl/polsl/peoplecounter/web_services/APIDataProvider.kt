@@ -19,7 +19,7 @@ class APIDataProvider {
         fun setupNewDetection(@Body body: JsonObject): Call<ResponseBody>
     }
     companion object {
-        val BASE_URL = "http://192.168.0.241:5000/"
+        val BASE_URL = "http://192.168.0.66:5000/"
         private val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))

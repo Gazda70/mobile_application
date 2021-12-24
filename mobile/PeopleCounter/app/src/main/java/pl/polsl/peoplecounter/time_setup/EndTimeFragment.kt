@@ -11,6 +11,7 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.findNavController
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
@@ -63,32 +64,23 @@ class EndTimeFragment : Fragment() {
             //Log.i("END TIME", "DETECTION END TIME " + endTimeViewModel.detectionEndTime.value)
             infl.findNavController().navigate(R.id.action_endTimeFragment_to_setUpDetection)
             Toast.makeText(context, "Detection request sent", Toast.LENGTH_LONG).show()
+            startDetectionRequest()
         }
 
         val timePicker = infl.findViewById<TimePicker>(R.id.detection_end_time_time_picker)
-        //timePicker.set
-        timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-            detectionEndTime = DetectionTime(hourOfDay.toString(), minute.toString())
-        }
+        detectionEndTime = DetectionTime(timePicker.hour.toString(), timePicker.minute.toString())
+
         return infl
     }
 
     fun startDetectionRequest(){
-        /*
-        networkType:string,
-                    objThreshold:number,
-                    startDate:DetectionDate,
-                    endDate:DetectionDate,
-                    startTime:DetectionTime,
-                    endTime:DetectionTime
-        * */
         //zrobić JSONA
+        val gson = Gson()
         val jsonObj = JsonObject()
         jsonObj.addProperty("objThreshold", "0.3")
-        jsonObj.addProperty("startDate", detectionDate.toString())
-        jsonObj.addProperty("endDate", detectionDate.toString())
-        jsonObj.addProperty("startTime", detectionStartTime.toString())
-        jsonObj.addProperty("endTime", detectionEndTime.toString())
+        jsonObj.addProperty("startDate", gson.toJson(detectionDate))
+        jsonObj.addProperty("startTime", gson.toJson(detectionStartTime))
+        jsonObj.addProperty("endTime", gson.toJson(detectionEndTime))
 
         val response = APIDataProvider.service.setupNewDetection(jsonObj).enqueue(object :
             Callback<ResponseBody> {
