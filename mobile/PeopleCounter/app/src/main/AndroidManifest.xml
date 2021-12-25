@@ -12,13 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PeopleCounter"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".statistics_presentation.BarChartSimpleActivity"
-            android:label="@string/title_activity_bar_chart_test"
-            android:theme="@style/Theme.PeopleCounter.NoActionBar"></activity>
-        <activity
-            android:name=".statistics_presentation.StatisticsPresentationActivity"
-            android:exported="true" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

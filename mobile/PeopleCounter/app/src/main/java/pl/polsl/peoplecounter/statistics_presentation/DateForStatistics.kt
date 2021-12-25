@@ -51,7 +51,7 @@ class DateForStatistics : Fragment() {
             setFragmentResult("date_for_statistics_display", bundleOf("year" to selectedYear,
                 "month" to DetectionDate.formatMonthNumberToLiteralShortcut(selectedMonthNumber.toInt()),
                 "day" to selectedDay))
-            infl.findNavController().navigate(R.id.action_dateForStatistics_to_statisticsPresentationActivity)
+            infl.findNavController().navigate(R.id.action_dateForStatistics_to_statisticPresentation)
         }
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             // Create calender object with which will have system date time.

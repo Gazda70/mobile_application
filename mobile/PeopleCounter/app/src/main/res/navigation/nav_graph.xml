@@ -13,11 +13,6 @@
             android:id="@+id/action_calendarFragment_to_startTimeFragment"
             app:destination="@id/startTimeFragment" />
     </fragment>
-    <activity
-        android:id="@+id/statisticsPresentationActivity"
-        android:name="pl.polsl.peoplecounter.statistics_presentation.StatisticsPresentationActivity"
-        android:label="activity_statistics_presentation"
-        tools:layout="@layout/activity_statistics_presentation" />
     <fragment
         android:id="@+id/setUpDetection"
         android:name="pl.polsl.peoplecounter.SetUpDetection"
@@ -46,16 +41,17 @@
             android:id="@+id/action_startTimeFragment_to_endTimeFragment"
             app:destination="@id/endTimeFragment" />
     </fragment>
-    <activity
-        android:id="@+id/barChartSimpleActivity"
-        android:name="pl.polsl.peoplecounter.statistics_presentation.BarChartSimpleActivity"
-        android:label="BarChartSimpleActivity" />
     <fragment
         android:id="@+id/dateForStatistics"
         android:name="pl.polsl.peoplecounter.statistics_presentation.DateForStatistics"
         android:label="DateForStatistics" >
         <action
-            android:id="@+id/action_dateForStatistics_to_statisticsPresentationActivity"
-            app:destination="@id/statisticsPresentationActivity" />
+            android:id="@+id/action_dateForStatistics_to_statisticPresentation"
+            app:destination="@id/statisticPresentation" />
     </fragment>
+    <fragment
+        android:id="@+id/statisticPresentation"
+        android:name="pl.polsl.peoplecounter.statistics_presentation.StatisticPresentation"
+        android:label="statistic_presentation_fragment"
+        tools:layout="@layout/statistic_presentation_fragment" />
 </navigation>

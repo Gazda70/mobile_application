@@ -57,19 +57,18 @@ class EndTimeFragment : Fragment() {
     ): View? {
         val infl = inflater.inflate(R.layout.end_time_fragment, container, false)
         val sendDetectionRequestButton = infl.findViewById<Button>(R.id.send_detection_request_button)
+        val timePicker = infl.findViewById<TimePicker>(R.id.detection_end_time_time_picker)
 
         sendDetectionRequestButton.setOnClickListener {
             //Log.i("DATE", "DETECTION DATE " + dateViewModel.detectionDate)
             //Log.i("START TIME", "DETECTION START TIME " + startTimeViewModel.detectionStartTime.value)
             //Log.i("END TIME", "DETECTION END TIME " + endTimeViewModel.detectionEndTime.value)
+            detectionEndTime = DetectionTime(timePicker.hour.toString(), timePicker.minute.toString())
+            Log.i("END TIME FROM TIME PICKER", "END TIME " + detectionStartTime)
             infl.findNavController().navigate(R.id.action_endTimeFragment_to_setUpDetection)
             Toast.makeText(context, "Detection request sent", Toast.LENGTH_LONG).show()
             startDetectionRequest()
         }
-
-        val timePicker = infl.findViewById<TimePicker>(R.id.detection_end_time_time_picker)
-        detectionEndTime = DetectionTime(timePicker.hour.toString(), timePicker.minute.toString())
-
         return infl
     }
 

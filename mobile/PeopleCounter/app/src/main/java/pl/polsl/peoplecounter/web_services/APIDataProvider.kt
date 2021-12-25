@@ -11,8 +11,8 @@ import retrofit2.http.*
 class APIDataProvider {
 
     interface APIService {
-        @GET("/predictions")
-        fun getDetectionStatistics(): Call<ResponseBody>
+        @POST("/predictions")
+        fun getDetectionStatistics(@Body body: JsonObject): Call<ResponseBody>
 
         @Headers("Content-type: application/json")
         @POST("/setup")
