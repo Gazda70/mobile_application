@@ -45,7 +45,8 @@ class EndTimeFragment : Fragment() {
         }
         setFragmentResultListener("detection_start_time") { key, bundle ->
             // Any type can be passed via to the bundle
-            detectionStartTime = DetectionTime(bundle.getString("hour")!!, bundle.getString("minute")!!)
+            detectionStartTime = DetectionTime(DetectionTime.setTwoDigitsFormat(bundle.getString("hour")!!),
+                DetectionTime.setTwoDigitsFormat(bundle.getString("minute")!!))
             // Do something with the result...
             Log.i("START TIME FROM LISTENER", "START TIME " + detectionStartTime)
         }
@@ -63,7 +64,8 @@ class EndTimeFragment : Fragment() {
             //Log.i("DATE", "DETECTION DATE " + dateViewModel.detectionDate)
             //Log.i("START TIME", "DETECTION START TIME " + startTimeViewModel.detectionStartTime.value)
             //Log.i("END TIME", "DETECTION END TIME " + endTimeViewModel.detectionEndTime.value)
-            detectionEndTime = DetectionTime(timePicker.hour.toString(), timePicker.minute.toString())
+            detectionEndTime = DetectionTime(DetectionTime.setTwoDigitsFormat(timePicker.hour.toString()),
+                DetectionTime.setTwoDigitsFormat(timePicker.minute.toString()))
             Log.i("END TIME FROM TIME PICKER", "END TIME " + detectionStartTime)
             infl.findNavController().navigate(R.id.action_endTimeFragment_to_setUpDetection)
             Toast.makeText(context, "Detection request sent", Toast.LENGTH_LONG).show()
