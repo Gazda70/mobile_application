@@ -31,15 +31,11 @@ import retrofit2.Callback
 
 class StatisticPresentation : Fragment() {
 
-    private val MAX_X_VALUE = 7
-    private val MAX_Y_VALUE = 50
-    private val MIN_Y_VALUE = 5
-    private val SET_LABEL = "App Downloads"
     private lateinit var chart: BarChart
-    val groupSpace = 0.06f
-    val barSpace = 0.02f // x2 dataset
+    val groupSpace = 0.08f
+    val barSpace = 0.01f // x2 dataset
 
-    val barWidth = 0.45f // x2 dataset
+    val barWidth = 0.3f // x2 dataset
 
     private lateinit var detectionDate: DetectionDate
 
@@ -83,32 +79,22 @@ class StatisticPresentation : Fragment() {
         val xAxis: XAxis = chart.getXAxis()
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
+                if(value.toInt() >= detectionPeriodNames.size){
+                    return ""
+                }
                 return detectionPeriodNames[value.toInt()]
             }
         }
+        xAxis.textSize = 1.0f
         val axisLeft: YAxis = chart.getAxisLeft()
-        axisLeft.granularity = 10f
+        axisLeft.granularity = 5f
         axisLeft.axisMinimum = 0f
         val axisRight: YAxis = chart.getAxisRight()
-        axisRight.granularity = 10f
+        axisRight.granularity = 5f
         axisRight.axisMinimum = 0f
     }
 
     private fun createChartData(detectionData: JSONObject): BarData? {
-        /*val values: ArrayList<BarEntry> = ArrayList()
-        for (i in 0 until MAX_X_VALUE) {
-            val x = i.toFloat()
-            val y: Float = Random.nextFloat() % (MAX_Y_VALUE - MIN_Y_VALUE) + MIN_Y_VALUE
-
-            values.add(BarEntry(x, y))
-        }
-        val set1 = BarDataSet(values, SET_LABEL)
-        val dataSets: ArrayList<IBarDataSet> = ArrayList()
-        dataSets.add(set1)
-        return BarData(dataSets)*/
-        /*Log.i("DETECTION DATA: ",
-    ((jsonResponse["detection_period_stats"] as JSONArray)[0]
-            as JSONObject)["start_time"].toString())*/
         val mins = arrayListOf<Int>()
         val maxes = arrayListOf<Int>()
         val averages = arrayListOf<Int>()
@@ -120,6 +106,9 @@ class StatisticPresentation : Fragment() {
             mins.add(element["people_min"].toString().toInt())
             maxes.add(element["people_max"].toString().toInt())
             averages.add(element["people_avg"].toString().toInt())
+            Log.i("MIN", element["people_min"].toString())
+            Log.i("MAX", element["people_max"].toString())
+            Log.i("AVG", element["people_avg"].toString())
             detectionPeriodNames.add(element["start_time"].toString()
             + "-" + element["end_time"].toString())
         }
@@ -128,6 +117,7 @@ class StatisticPresentation : Fragment() {
         maxes.add((detectionData["whole_day_stats"] as JSONObject)["people_max"].toString().toInt())
         averages.add((detectionData["whole_day_stats"] as JSONObject)["people_avg"].toString().toInt())
         detectionPeriodNames.add("Whole day")
+        detectionPeriodNames.add("")
 
 
         val entriesGroup1:ArrayList<BarEntry> = ArrayList()
@@ -135,14 +125,18 @@ class StatisticPresentation : Fragment() {
         val entriesGroup3:ArrayList<BarEntry> = ArrayList()
 // fill the lists
         for(i in mins.indices) {
-            entriesGroup1.add(i, BarEntry(i.toFloat(), mins.get(i).toFloat()))
+            entriesGroup1.add( i, BarEntry(i.toFloat(), mins.get(i).toFloat()))
+        }
+        for(i in maxes.indices) {
             entriesGroup2.add(i, BarEntry(i.toFloat(), maxes.get(i).toFloat()))
+        }
+        for(i in averages.indices) {
             entriesGroup3.add(i, BarEntry(i.toFloat(), averages.get(i).toFloat()))
         }
-
+        entriesGroup1.add(averages.size, BarEntry(averages.size + 1.toFloat(), 0f))
         val set1: BarDataSet = BarDataSet(entriesGroup1, "Minimal people count")
         val set2: BarDataSet = BarDataSet(entriesGroup2, "Maximal people count")
-        val set3: BarDataSet = BarDataSet(entriesGroup2, "Average people count")
+        val set3: BarDataSet = BarDataSet(entriesGroup3, "Average people count")
         set1.color = Color.YELLOW
         set2.color = Color.RED
         set3.color = Color.BLUE
@@ -184,9 +178,6 @@ class StatisticPresentation : Fragment() {
                     )
                     val jsonResponse = JSONObject(prettyJson.substring(1,
                         prettyJson.length - 1).replace("\\", ""))
-                    /*Log.i("DETECTION DATA: ",
-                        ((jsonResponse["detection_period_stats"] as JSONArray)[0]
-                                as JSONObject)["start_time"].toString())*/
                     data = createChartData(jsonResponse)!!
                     configureChartAppearance()
                     prepareChartData(data)
