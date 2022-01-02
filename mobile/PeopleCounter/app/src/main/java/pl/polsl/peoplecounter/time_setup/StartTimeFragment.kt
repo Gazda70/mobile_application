@@ -34,7 +34,6 @@ class StartTimeFragment : Fragment() {
         val infl = inflater.inflate(R.layout.start_time_fragment, container, false)
         val goToEndTimeButton = infl.findViewById<Button>(R.id.setup_detection_end_time_button)
         val timePicker = infl.findViewById<TimePicker>(R.id.detection_start_time_time_picker)
-        Log.i("TIME", "MY TIME IS:" + timePicker.hour.toString())
 
         setFragmentResultListener("detection_date") { key, bundle ->
             detectionDate = DetectionDate(bundle.getString("year")!!, bundle.getString("month")!!, bundle.getString("day")!!)
@@ -63,16 +62,6 @@ class StartTimeFragment : Fragment() {
 
     private fun checkStartTime(startHour:Int, startMinute:Int):Boolean{
         val currentDate = LocalDateTime.now()
-        Log.i("currentDate", currentDate.year.toString() + " "
-        + currentDate.monthValue.toString() + " " + currentDate.dayOfMonth +
-        " " + currentDate.hour.toString() + " " + currentDate.minute.toString())
-        Log.i("start time", startHour.toString() + " " + startMinute.toString())
-        Log.i("detection date", detectionDate.year + " " + detectionDate.month.toInt() +
-                " " + detectionDate.day.toInt())
-        Log.i("check result", (!(currentDate.year == detectionDate.year.toInt() && currentDate.monthValue==
-                detectionDate.month.toInt()
-                && currentDate.dayOfMonth == detectionDate.day.toInt() && currentDate.hour > startHour
-                && currentDate.minute > startMinute)).toString())
         return !(currentDate.year == detectionDate.year.toInt() && currentDate.monthValue==
                 detectionDate.month.toInt()
             && currentDate.dayOfMonth == detectionDate.day.toInt() && (currentDate.hour > startHour

@@ -33,9 +33,8 @@ class StatisticPresentation : Fragment() {
 
     private lateinit var chart: BarChart
     val groupSpace = 0.08f
-    val barSpace = 0.01f // x2 dataset
-
-    val barWidth = 0.3f // x2 dataset
+    val barSpace = 0.01f
+    val barWidth = 0.3f
 
     private lateinit var detectionDate: DetectionDate
 
@@ -57,22 +56,14 @@ class StatisticPresentation : Fragment() {
         val infl = inflater.inflate(R.layout.statistic_presentation_fragment, container, false)
         chart = infl.findViewById<BarChart>(R.id.bar_chart)
         setFragmentResultListener("date_for_statistics_display") { key, bundle ->
-            // Any type can be passed via to the bundle
             detectionDate = DetectionDate(bundle.getString("year")!!,
                 bundle.getString("month")!!,
                 bundle.getString("day")!!)
-            // Do something with the result...
-            Log.i("DATE FROM LISTENER", "DETECTION DATE " + detectionDate)
             getDetectionStatistics()
         }
         return infl
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(StatisticPresentationViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
     private fun configureChartAppearance() {
         chart.getDescription().setEnabled(false)
         chart.setDrawValueAboveBar(false)
@@ -106,9 +97,6 @@ class StatisticPresentation : Fragment() {
             mins.add(element["people_min"].toString().toInt())
             maxes.add(element["people_max"].toString().toInt())
             averages.add(element["people_avg"].toString().toInt())
-            Log.i("MIN", element["people_min"].toString())
-            Log.i("MAX", element["people_max"].toString())
-            Log.i("AVG", element["people_avg"].toString())
             detectionPeriodNames.add(element["start_time"].toString()
             + "-" + element["end_time"].toString())
         }
@@ -123,7 +111,6 @@ class StatisticPresentation : Fragment() {
         val entriesGroup1:ArrayList<BarEntry> = ArrayList()
         val entriesGroup2:ArrayList<BarEntry> = ArrayList()
         val entriesGroup3:ArrayList<BarEntry> = ArrayList()
-// fill the lists
         for(i in mins.indices) {
             entriesGroup1.add( i, BarEntry(i.toFloat(), mins.get(i).toFloat()))
         }
@@ -164,7 +151,6 @@ class StatisticPresentation : Fragment() {
         val response = APIDataProvider.service.getDetectionStatistics(jsonObj).enqueue(object :
             Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.i("Error", "My error")
             }
             override fun onResponse(
                 call: Call<ResponseBody>,
