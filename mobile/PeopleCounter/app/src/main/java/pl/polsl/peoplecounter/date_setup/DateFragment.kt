@@ -43,13 +43,11 @@ class DateFragment : Fragment() {
 
             infl.findNavController().navigate(R.id.action_calendarFragment_to_startTimeFragment)
         }
-
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val calender: Calendar = Calendar.getInstance()
             calender.set(year, month, dayOfMonth)
             calendarView.setDate(calender.timeInMillis, true, true)
         }
-
         return infl
     }
 }

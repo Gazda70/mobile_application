@@ -113,11 +113,7 @@ class StatisticPresentation : Fragment() {
         val entriesGroup3:ArrayList<BarEntry> = ArrayList()
         for(i in mins.indices) {
             entriesGroup1.add( i, BarEntry(i.toFloat(), mins.get(i).toFloat()))
-        }
-        for(i in maxes.indices) {
             entriesGroup2.add(i, BarEntry(i.toFloat(), maxes.get(i).toFloat()))
-        }
-        for(i in averages.indices) {
             entriesGroup3.add(i, BarEntry(i.toFloat(), averages.get(i).toFloat()))
         }
         entriesGroup1.add(averages.size, BarEntry(averages.size + 1.toFloat(), 0f))
