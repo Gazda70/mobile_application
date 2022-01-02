@@ -22,6 +22,7 @@ import pl.polsl.peoplecounter.datatypes.DetectionTime
 import retrofit2.Call
 import retrofit2.Callback
 import java.time.Duration
+import java.util.*
 
 class EndTimeFragment : Fragment() {
 
@@ -37,9 +38,11 @@ class EndTimeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener("detection_date") { key, bundle ->
+        setFragmentResultListener("detection_date_2") { key, bundle ->
             // Any type can be passed via to the bundle
-            detectionDate = DetectionDate(bundle.getString("year")!!, bundle.getString("month")!!, bundle.getString("day")!!)
+            detectionDate = DetectionDate(bundle.getString("year")!!,
+                DetectionDate.formatMonthNumberToLiteralShortcut(bundle.getString("month")!!.toInt()),
+                bundle.getString("day")!!)
             // Do something with the result...
             Log.i("DATE FROM LISTENER", "DETECTION DATE " + detectionDate)
         }
@@ -66,10 +69,15 @@ class EndTimeFragment : Fragment() {
             //Log.i("END TIME", "DETECTION END TIME " + endTimeViewModel.detectionEndTime.value)
             detectionEndTime = DetectionTime(DetectionTime.setTwoDigitsFormat(timePicker.hour.toString()),
                 DetectionTime.setTwoDigitsFormat(timePicker.minute.toString()))
-            Log.i("END TIME FROM TIME PICKER", "END TIME " + detectionStartTime)
-            infl.findNavController().navigate(R.id.action_endTimeFragment_to_setUpDetection)
-            Toast.makeText(context, "Detection request sent", Toast.LENGTH_LONG).show()
-            startDetectionRequest()
+            if(checkCorrectTimePrecedency(detectionStartTime, detectionEndTime)) {
+                Log.i("END TIME FROM TIME PICKER", "END TIME " + detectionStartTime)
+                infl.findNavController().navigate(R.id.action_endTimeFragment_to_setUpDetection)
+                Toast.makeText(context, "Detection request sent", Toast.LENGTH_LONG).show()
+                startDetectionRequest()
+            }else{
+                Toast.makeText(context, "End time must be later than start time !",
+                    Toast.LENGTH_LONG).show()
+            }
         }
         return infl
     }
@@ -103,9 +111,16 @@ class EndTimeFragment : Fragment() {
         })
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
+    private fun checkCorrectTimePrecedency(startTime:DetectionTime, endTime:DetectionTime):Boolean{
+        val startTimeAsDate = Date()
+        startTimeAsDate.hours = startTime.hour.toInt()
+        startTimeAsDate.minutes = startTime.minute.toInt()
+
+        val endTimeAsDate = Date()
+        endTimeAsDate.hours = endTime.hour.toInt()
+        endTimeAsDate.minutes = endTime.minute.toInt()
+
+        return startTimeAsDate.time < endTimeAsDate.time
     }
 
 }

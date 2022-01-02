@@ -3,14 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/activity_bar_chart_test.xml" value="0.1403985507246377" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/activity_barchart.xml" value="0.1" />
+        <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/activity_barchart_simple.xml" value="0.1403985507246377" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/activity_statistics_presentation.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/calendar_fragment.xml" value="0.22" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/clock_fragment.xml" value="0.22" />
+        <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/content_bar_chart_test.xml" value="0.1403985507246377" />
+        <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/custom_marker_view.xml" value="0.1403985507246377" />
+        <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/date_for_statistics_fragment.xml" value="0.1403985507246377" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/date_fragment.xml" value="0.22" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/detection_end_time_fragment.xml" value="0.11322463768115942" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/end_time_fragment.xml" value="0.1539855072463768" />
+        <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/fragment_first.xml" value="0.1403985507246377" />
+        <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/fragment_second.xml" value="0.1403985507246377" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/set_up_detection_fragment.xml" value="0.11322463768115942" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/start_time_fragment.xml" value="0.22" />
         <entry key="..\:/Users/pjgaz/Desktop/Inzynierka/mobile_application/mobile/PeopleCounter/app/src/main/res/layout/statistic_presentation_fragment.xml" value="0.13949275362318841" />

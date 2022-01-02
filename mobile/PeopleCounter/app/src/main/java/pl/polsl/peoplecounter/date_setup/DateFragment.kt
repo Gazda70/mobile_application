@@ -45,8 +45,7 @@ class DateFragment : Fragment() {
             val strFormattedSelectedDate = "$selectedDay-$selectedMonthString-$selectedYear"
             Log.i("DATE", "MY DATE IS:" + strFormattedSelectedDate)
             setFragmentResult("detection_date", bundleOf("year" to selectedYear,
-                "month" to DetectionDate.formatMonthNumberToLiteralShortcut(selectedMonthNumber.toInt()),
-                "day" to selectedDay))
+                "month" to selectedMonthNumber, "day" to selectedDay))
 
             infl.findNavController().navigate(R.id.action_calendarFragment_to_startTimeFragment)
         }
@@ -64,10 +63,4 @@ class DateFragment : Fragment() {
         }
         return infl
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
-    }
-
 }
