@@ -12,6 +12,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.findNavController
 import pl.polsl.peoplecounter.R
 import android.text.format.DateFormat
+import android.util.Log
 import java.util.*
 
 class DateFragment : Fragment() {
@@ -28,9 +29,9 @@ class DateFragment : Fragment() {
         val infl = inflater.inflate(R.layout.date_fragment, container, false)
         val goToTimeButton = infl.findViewById<Button>(R.id.got_to_clock_button)
         val calendarView = infl.findViewById<CalendarView>(R.id.set_detection_date_calendar)
-        val calender: Calendar = Calendar.getInstance()
-        calendarView.minDate = calender.timeInMillis
-        calendarView.date = calender.timeInMillis
+        val calenderForFirstDate: Calendar = Calendar.getInstance()
+        calendarView.minDate = calenderForFirstDate.timeInMillis
+        calendarView.date = calenderForFirstDate.timeInMillis
         goToTimeButton.setOnClickListener {
             val dateMillis: Long = calendarView.date
             val date: Date = Date(dateMillis)
@@ -42,6 +43,13 @@ class DateFragment : Fragment() {
 
             infl.findNavController().navigate(R.id.action_calendarFragment_to_startTimeFragment)
         }
+
+        calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            val calender: Calendar = Calendar.getInstance()
+            calender.set(year, month, dayOfMonth)
+            calendarView.setDate(calender.timeInMillis, true, true)
+        }
+
         return infl
     }
 }
