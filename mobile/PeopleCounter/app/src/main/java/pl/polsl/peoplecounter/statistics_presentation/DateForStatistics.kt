@@ -32,8 +32,7 @@ class DateForStatistics : Fragment() {
         val goToStatisticsPresentationActivityButton = infl.findViewById<Button>(R.id.got_to_statistics_button)
         val calendarView = infl.findViewById<CalendarView>(R.id.set_day_for_statistics_display_calendar)
         goToStatisticsPresentationActivityButton.setOnClickListener {
-            val dateMillis: Long = calendarView.date
-            val date: Date = Date(dateMillis)
+            val date: Date = Date(calendarView.date)
             val selectedDay = DateFormat.format("dd", date) as String
             val selectedMonthNumber = DateFormat.format("MM", date) as String
             val selectedYear = DateFormat.format("yyyy", date) as String
@@ -41,6 +40,11 @@ class DateForStatistics : Fragment() {
                 "month" to DetectionDate.formatMonthNumberToLiteralShortcut(selectedMonthNumber.toInt()),
                 "day" to selectedDay))
             infl.findNavController().navigate(R.id.action_dateForStatistics_to_statisticPresentation)
+        }
+        calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            val calender: Calendar = Calendar.getInstance()
+            calender.set(year, month, dayOfMonth)
+            calendarView.setDate(calender.timeInMillis, true, true)
         }
         return infl
     }
