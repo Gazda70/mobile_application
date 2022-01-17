@@ -1,16 +1,14 @@
 package pl.polsl.peoplecounter.statistics_presentation
 
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
-import android.widget.TimePicker
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.findNavController
